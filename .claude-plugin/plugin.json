@@ -1,9 +1,19 @@
 {
   "name": "brainbox-ceo",
   "displayName": "CEO Command Center by BrainBox",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Keeps a founder's open loops from dropping: files every reply owed, promise made and decision pending, and shows one ranked screen of what needs you.",
-  "author": { "name": "BrainBox Labs" },
+  "author": {
+    "name": "BrainBox Labs"
+  },
   "license": "MIT",
-  "keywords": ["ceo", "founder", "command-center", "open-loops", "productivity", "mcp-app"]
+  "keywords": [
+    "ceo",
+    "founder",
+    "command-center",
+    "open-loops",
+    "productivity",
+    "mcp-app"
+  ],
+  "privacyPolicyUrl": "https://control-center-v1.web.app/privacy"
 }
