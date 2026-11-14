@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "brainbox-ceo": {
+      "type": "http",
+      "url": "https://control-center-v1.web.app/mcp"
+    }
+  }
+}

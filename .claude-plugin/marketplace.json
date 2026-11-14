@@ -1,0 +1,11 @@
+{
+  "name": "brainbox",
+  "owner": { "name": "BrainBox Labs" },
+  "plugins": [
+    {
+      "name": "brainbox-ceo",
+      "source": "./",
+      "description": "CEO Command Center by BrainBox: one ranked screen of what needs you, so nothing drops."
+    }
+  ]
+}
