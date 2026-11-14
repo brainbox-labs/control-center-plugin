@@ -23,8 +23,10 @@ can reach them, and nothing is sold or shared.
   sign-in page loads Google's Firebase sign-in script.
 - **Read-only on your tools.** The skills read connectors only. They draft a message only when you ask
   for that specific one and never send without your approval.
-- **Deleting your data.** Email the address below and we delete everything under your account within
-  30 days. Disconnecting the connector in Claude stops all access immediately.
+- **Feedback you send.** If you send feedback from the dashboard or ask Claude to send it, we store the
+  text with your email so we can reply. It's kept until you ask us to delete it.
+- **Deleting your data.** Say "delete my data" in Claude, or email the address below, and we delete
+  everything under your account within 30 days. Disconnecting the connector in Claude stops all access immediately.
 - **Changes.** If this ever changes, the CHANGELOG and this file will say so first.
 
-Contact: gaurav@brainbox-ai.app
+Contact: hello@brainbox-ai.app

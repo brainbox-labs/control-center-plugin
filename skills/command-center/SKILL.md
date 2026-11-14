@@ -53,6 +53,11 @@ Any reaction to how this works, good or bad, gets logged in the user's words rig
 a noisy source to skip), apply it now and say so. Don't argue in the moment. Read recent feedback
 before sweeping or briefing so corrections stick.
 
+When the reaction is about the product itself (a bug, a missing feature, praise), also offer once:
+"Want me to send that to the BrainBox team?" On yes, show the text and send it with `cc_send_feedback`.
+Why: `cc_feedback` tunes this user's own command center; `cc_send_feedback` reaches the people who build
+it. Never send without the user's yes, since their email goes with it.
+
 ## Rules (and why)
 - **Every loop has a source and a concrete next action.** No source, no loop; the user must be able
   to check where it came from.

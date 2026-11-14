@@ -61,3 +61,8 @@ dashboard get a text version.
 - **Runs** nothing on your computer. No local server, no hooks, no telemetry or analytics.
 
 See [PRIVACY.md](PRIVACY.md) for retention and deletion. MIT licensed.
+
+## Feedback
+
+Use **Feedback** on the dashboard, tell Claude "send feedback to BrainBox: …", or email
+[hello@brainbox-ai.app](mailto:hello@brainbox-ai.app). We read every message.
