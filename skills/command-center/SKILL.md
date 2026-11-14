@@ -36,6 +36,11 @@ Tools: `cc_dashboard`, `cc_add_loops`, `cc_update_loop`, `cc_list_loops`, `cc_se
   one-page offer from Tuesday's notes") and store it with `cc_update_loop` `edit` `assist`. When the
   user assigns it ("do it", "go 2"), do it right away and report in a few lines. Drafting is fine;
   never send email or Slack without explicit approval of that specific message.
+- **A message that starts "do 12: ..."** (the dashboard's Do it button, or the user typing it) -> assigned
+  work for loop 12; don't ask first. Do it now (draft, research, prep), save any draft or prep with
+  `cc_save_doc { kind: "prep", key: "12", md }`, and report in a few lines with the next step. If it is
+  a suggestion, the button already accepted it. Never send email or Slack without approval of that specific message. Why: the button promises
+  the work starts now, and a saved prep means nobody redoes it.
 - **"prep 12"** -> read loop 12 (`cc_list_loops`) and what you can see in the connectors about it, write a short
   prep note (who, context, what they want, your recommended move, open questions), and save it with
   `cc_save_doc { kind: "prep", key: "12", md }`. Show the note in the chat too. Asked about the loop later:
@@ -46,6 +51,11 @@ Tools: `cc_dashboard`, `cc_add_loops`, `cc_update_loop`, `cc_list_loops`, `cc_se
 - **A reading summary** the user asked for -> `cc_save_doc { kind: "reading", key: <loop id>, md }`.
 - **"What's the plan today"** -> do the brief (see the `brief` skill).
 - **"Sweep now"** -> the `sweep` skill.
+
+## First turn of a session
+Check `cc_list_loops { owner: "agent", kind: "commitment", status: "open" }`. These are offers the user
+accepted that nobody has done yet. If there are any, say so in one line and offer to do the first now.
+Why: an accepted offer that only sits there is the exact drop this tool exists to prevent.
 
 ## Feedback is the most important input
 Any reaction to how this works, good or bad, gets logged in the user's words right away with
