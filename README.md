@@ -57,7 +57,7 @@ dashboard get a text version.
   for a sweep or brief. The plugin holds no Gmail, Slack or calendar credentials and makes no calls to
   those services. Skills are read-only on connectors: they never send, label or edit; drafts only
   when you ask.
-- **Loads** nothing from other sites in the dashboard: it is self-contained.
+- **Loads** only fonts from Google Fonts in the dashboard; no outside scripts or trackers.
 - **Runs** nothing on your computer. No local server, no hooks, no telemetry or analytics.
 
 See [PRIVACY.md](PRIVACY.md) for retention and deletion. MIT licensed.

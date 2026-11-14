@@ -18,8 +18,9 @@ can reach them, and nothing is sold or shared.
   hashes.
 - **What we don't do.** No selling or sharing of data, no advertising, no analytics or telemetry, no
   training on your data.
-- **No outside requests.** The dashboard is self-contained: no scripts, fonts or trackers load from other
-  sites. Only the sign-in page loads Google's Firebase sign-in script.
+- **Outside requests.** The dashboard loads its fonts (Inter, Instrument Serif) from Google Fonts, so
+  Google may see your IP address; no loop data is sent. No scripts or trackers load from other sites. The
+  sign-in page loads Google's Firebase sign-in script.
 - **Read-only on your tools.** The skills read connectors only. They draft a message only when you ask
   for that specific one and never send without your approval.
 - **Deleting your data.** Email the address below and we delete everything under your account within
