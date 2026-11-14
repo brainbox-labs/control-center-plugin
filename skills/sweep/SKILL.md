@@ -48,6 +48,13 @@ Judgment rules, applied to every source:
   exists (draft the reply, research the person).
 - Closed loops are skipped by the tool unless `reopen` is set; don't reopen on your own.
 
+## 4b. Keep the customer signal
+For each `signal` you filed, append the substance (who, what they said in their words, the product
+implication) to the learn lane: `cc_save_doc { kind: "lane", key: "learn", mode: "append", md }`. One
+call per sweep, all signals together; the tool adds the dated heading. Skip it when there is no signal.
+Why: loops decay and close, but the pattern across customers is what turns into product decisions, so it
+needs a durable home.
+
 ## 5. Close what resolved
 `cc_list_loops { status: "open" }`, then for loops from these sources: a commitment whose promised
 thing now appears in Sent mail or the user's messages, or a reply_owed/waiting_on whose thread now has

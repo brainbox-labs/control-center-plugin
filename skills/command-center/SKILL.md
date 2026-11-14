@@ -10,7 +10,7 @@ open loop with a decay timer. The user's attention is the bottleneck, so the out
 screen of what needs them, not a task manager they have to groom. Zero items is a good result.
 
 Tools: `cc_dashboard`, `cc_add_loops`, `cc_update_loop`, `cc_list_loops`, `cc_set_today`,
-`cc_goals`, `cc_cursor`, `cc_feedback`. All state changes go through them; never invent ids.
+`cc_goals`, `cc_cursor`, `cc_feedback`, and for saved markdown `cc_save_doc`, `cc_get_doc`, `cc_list_docs`. All state changes go through them; never invent ids.
 
 ## Lead with the one thing
 - "What needs me / what's next" -> call `cc_dashboard` (it renders the dashboard where the host
@@ -36,6 +36,14 @@ Tools: `cc_dashboard`, `cc_add_loops`, `cc_update_loop`, `cc_list_loops`, `cc_se
   one-page offer from Tuesday's notes") and store it with `cc_update_loop` `edit` `assist`. When the
   user assigns it ("do it", "go 2"), do it right away and report in a few lines. Drafting is fine;
   never send email or Slack without explicit approval of that specific message.
+- **"prep 12"** -> read loop 12 (`cc_list_loops`) and what you can see in the connectors about it, write a short
+  prep note (who, context, what they want, your recommended move, open questions), and save it with
+  `cc_save_doc { kind: "prep", key: "12", md }`. Show the note in the chat too. Asked about the loop later:
+  `cc_get_doc { kind: "prep", key: "12" }` first. Why: prep done once should not be redone in the next chat.
+- **A decision made** ("let's go with Stripe", "we're not doing X") -> append one line with the why:
+  `cc_save_doc { kind: "decision", key: "log", mode: "append", md }`, and close the matching decision loop.
+  "What did we decide about X" -> `cc_get_doc { kind: "decision", key: "log" }`.
+- **A reading summary** the user asked for -> `cc_save_doc { kind: "reading", key: <loop id>, md }`.
 - **"What's the plan today"** -> do the brief (see the `brief` skill).
 - **"Sweep now"** -> the `sweep` skill.
 

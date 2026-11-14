@@ -10,6 +10,9 @@ here, louder, on Thursday. It must fit on one screen (about 12 lines). Why: cons
 user's bottleneck; zero items is a good result and padding is a failure.
 
 ## Steps
+0. `cc_list_docs { kind: "brief", limit: 1 }`, then `cc_get_doc { kind: "brief", key: "latest" }`: the last brief is
+   your baseline for "Moved" (what you promised vs what closed). None yet: skip. Why: the brief has memory,
+   and the saved text is the only record of what was put in front of the user.
 1. `cc_dashboard` for the current view (focus, needs_you, chase, wins, goals, counts). If the user
    sweeps rarely, offer a sweep first (`sweep` skill) but don't force it.
 2. Judge, ranking against the goals from `cc_goals`: everything is measured against those top goals.
@@ -19,6 +22,9 @@ user's bottleneck; zero items is a good result and padding is a failure.
    work. Before calling anything a blocker, re-check the loop is still real.
 3. Save the picks with `cc_set_today { ids }` (max 3), so the dashboard shows them.
 4. Check recent `cc_feedback` about briefs and honor it.
+5. After writing the brief, save it: `cc_save_doc { kind: "brief", md }` (the date defaults to today in the
+   user's timezone; saving again the same day replaces it). Why: tomorrow's brief reads it back, and the
+   user can find old briefs.
 
 ## Output (max ~12 lines, plain text)
 - **Moved:** what closed or progressed since the last brief (wins count and one or two titles). Nothing
