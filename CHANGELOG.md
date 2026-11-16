@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0
+
+Skills move to the v2 tools and vocabulary.
+
+- Vocabulary: task (was loop), need (was kind), subject (was account/person), offer (was assist/suggestion).
+- Tools: `cc_add_tasks`, `cc_update_task`, `cc_list_tasks` replace `cc_add_loops`, `cc_update_loop`,
+  `cc_list_loops`; new `cc_subject`, `cc_send_feedback`, `cc_export`, `cc_delete_my_data`, `cc_save_doc`,
+  `cc_get_doc`, `cc_list_docs`, `cc_op`. `cc_person` and `cc_page_action` are gone.
+- `by: "me"` for what the user asks in chat (no source needed); `by: "agent"` plus a source and `key` for what a sweep finds.
+- Sweep links people and companies as subjects; the brief reads and saves briefs as docs.
+
 ## 0.1.0
 
 First release.

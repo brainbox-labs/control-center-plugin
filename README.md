@@ -1,15 +1,15 @@
 # CEO Command Center by BrainBox
 
-A Claude plugin that keeps a founder's open loops from dropping: it reads the tools you already
+A Claude plugin that keeps a founder's tasks from dropping: it reads the tools you already
 connected, files every reply owed, promise made and decision pending, and shows one ranked screen of
 what needs you.
 
 ## What you get
 
 - A **dashboard** (an interactive MCP App) with the one thing to do now, your top goals, Today's 3,
-  what needs you, who to chase, and what you closed this week. Done, Snooze and Help are one tap.
-- A **sweep** that pulls new loops from Gmail, Calendar, Slack, Granola and similar connectors, and
-  closes loops that resolved.
+  what needs you, who to chase, the agent's offers, your pipeline, and what you closed this week. Done, Snooze and Do it are one tap.
+- A **sweep** that pulls new tasks from Gmail, Calendar, Slack, Granola and similar connectors, and
+  closes tasks that resolved.
 - A **brief** that picks Today's 3 against your goals and fits on one screen.
 - Plain-language control: "what needs me", "done 12", "snooze 4", "remind me to send Sam the deck".
 
@@ -33,16 +33,29 @@ fundraise, product, learn, ops by default), notes which connectors it can see, a
 
 ## Daily use
 
-- `/brainbox-ceo:sweep` or "sweep now": pull new loops.
+- `/brainbox-ceo:sweep` or "sweep now": pull new tasks.
 - `/brainbox-ceo:brief` or "brief me": the one thing and Today's 3.
 - "What needs me?": shows the dashboard.
-- "done 12", "snooze 4", "drop 7": update a loop by id.
-- Dump a thought ("I promised Priya the pricing doc by Friday") and it becomes a loop with a next step.
+- "done 12", "snooze 4", "drop 7": update a task by id.
+- Dump a thought ("I promised Priya the pricing doc by Friday") and it becomes a task with a next step.
+
+## Tools
+
+The connector exposes these tools (Claude calls them; you never need to):
+
+- `cc_dashboard`: the one-screen view (interactive where supported)
+- `cc_add_tasks`, `cc_update_task`, `cc_list_tasks`, `cc_set_today`: tasks and Today's picks
+- `cc_subject`: companies and people, and each lane's pipeline
+- `cc_goals`, `cc_cursor`: goals, lanes, timezone; per-source sweep cursors
+- `cc_save_doc`, `cc_get_doc`, `cc_list_docs`: briefs, prep, reading notes, decisions, lane notes
+- `cc_feedback` (tunes your own command center), `cc_send_feedback` (to the BrainBox team)
+- `cc_export`, `cc_delete_my_data`: your data, on request
+- `cc_op`: used by the dashboard's buttons only
 
 ## Where it works
 
 Everywhere Claude runs: chat on web, desktop and mobile, Cowork, and Claude Code. The plugin's
-connector is a remote server, so your loops follow you between devices. Hosts that can't render the
+connector is a remote server, so your tasks follow you between devices. Hosts that can't render the
 dashboard get a text version.
 
 ## What this plugin runs, reads and sends
@@ -50,7 +63,7 @@ dashboard get a text version.
 - **Connects** to one remote MCP server, `https://control-center-v1.web.app/mcp`, run by BrainBox
   Labs on Google Firebase. You sign in with your Google account (OAuth); BrainBox sees your name and
   email from Google, nothing else from that account.
-- **Stores** your loops (title, next step, source link or short quote, dates), goals, lanes, sweep
+- **Stores** your tasks, companies and people (title, next step, source link or short quote, dates), goals, lanes, sweep
   cursors and feedback in Google Cloud Firestore, under your own account and readable only by you
   through the server. No other user can read them; we don't sell or share them.
 - **Reads** only connectors you already connected to Claude, and only through Claude, when you ask
