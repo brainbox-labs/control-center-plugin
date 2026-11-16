@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0
+
+One sweep skill and one brief skill, carrying the rules learned from real use (previously a richer copy lived in the code repo).
+
+- Sweep: daily sources, `me`/ignore doc, canary on Slack, reading summaries and think items, closing resolved tasks from sent mail, subjects and stages, offers, run log; new read-only Apollo step (`apollo:<id>`).
+- Brief: one Opus judge, progressive disclosure (5 lines, then `## More`), prep docs, inbox triage, signal absorption, Friday pipeline numbers, push notification.
+- Product-generic: founder context comes from the user's `me`, `culture` and goals docs.
+
 ## 0.2.0
 
 Skills move to the v2 tools and vocabulary.
