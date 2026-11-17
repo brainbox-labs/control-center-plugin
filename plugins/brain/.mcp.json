@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "brainbox": {
+      "type": "http",
+      "url": "https://ctx.brainbox-ai.app/api/org-mcp"
+    }
+  }
+}

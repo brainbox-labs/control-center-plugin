@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+
+Renamed and moved into the `brainbox` marketplace. No behaviour change.
+
+- Plugin renamed `brainbox-ceo` to `ceo-control-center`; commands are now `/ceo-control-center:sweep`, `brief`, `setup`.
+- Install: `/plugin marketplace add brainbox-labs/control-center-plugin`, then `/plugin install ceo-control-center@brainbox`.
+- The MCP server and connector name (`brainbox-ceo`) and the `cc_*` tools are unchanged.
+
 ## 0.3.0
 
 One sweep skill and one brief skill, carrying the rules learned from real use (previously a richer copy lived in the code repo).
@@ -28,4 +36,4 @@ First release.
 - Eight tools: `cc_dashboard`, `cc_add_loops`, `cc_update_loop`, `cc_list_loops`, `cc_set_today`,
   `cc_goals`, `cc_cursor`, `cc_feedback`.
 - Dashboard MCP App: the one thing, goals, Today's 3, needs you, chase, wins, with Done, Snooze and Help.
-- Skills: command-center, sweep, brief, setup. Commands: `/brainbox-ceo:sweep`, `brief`, `setup`.
+- Skills: command-center, sweep, brief, setup. Commands: `/brainbox-ceo:sweep`, `brief`, `setup` (namespace now `ceo-control-center:`).
