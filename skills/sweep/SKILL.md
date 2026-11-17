@@ -37,11 +37,13 @@ File one `cc_add_tasks` batch per source (`by:"agent"`, max 50, all or nothing: 
 and resend). Item fields: `title lane need next outcome due about key src_type src_url src_quote
 owner offer note`. `about` is a subject by name.
 
-**Long-term context.** While reading, mark what is worth remembering beyond the task list, with a one-line `why`
-(you judge; cc only delivers): every Granola meeting (key `granola:<meetingId>`; notes/summary as `text`, `title`,
-`participants`, `url`, `at`), and only the Gmail threads that hold lasting knowledge: customer signal, a decision, context
-on a person, company or deal (key `gmail:<threadId>`; the summary you read as `text`, `participants` with emails). Not
-logistics, scheduling, receipts or noise. Notes and summaries only, never transcripts.
+**Long-term context.** Every Granola meeting and every Gmail thread you actually read (you already skip newsletters,
+receipts and noise) goes into the feed `items`: key `granola:<meetingId>` or `gmail:<threadId>`, the notes or summary you
+already formed as `text` (never transcripts, never full raw email bodies), plus `title`, `participants` (with emails),
+`url`, `at`. Mark `keep: true` with a one-line `why` for what will still matter weeks from now for the founder's goals in
+goals.md (winning customers, hiring, raising); judge it, don't apply categories. Granola meetings are always `keep: true`.
+Anything else goes in with `keep` left off. Why: cc logs everything you read as ground truth and delivers only the marked
+items to the brain, retrying until sent.
 
 **Granola**: search meetings since the cursor, then read them (max 10 per call). Notes and summaries,
 not transcripts; pull a transcript chunk only if a commitment is ambiguous. Why: cost.
@@ -148,9 +150,10 @@ linkedin?, touch?}` matches by name, so repeating is safe; it returns the id for
   `cc_update_task {id, fields:{offer}}` instead.
 
 ## 5. Finish
-Hand over the marked items: `cc_op {op:"brain", input:{action:"feed", items:[...]}}`, once per 50 items. No status
-check: cc sends each once, skips quietly when no brain is connected, and syncs task outcomes. Add its line (`brain +N`)
-to the run log.
+Hand over everything you read: `cc_op {op:"brain", input:{action:"feed", items:[...]}}`, once per 50 items, and call it
+once even with no items so earlier unsent reads retry. No status check: cc logs each item, sends the marked ones once,
+skips quietly when no brain is connected, and syncs task outcomes. Add its line (`brain +N (X logged, Y pending)`) to the
+run log.
 Append the run log: `cc_save_doc {kind:"note", key:"runs", mode:"append", md:"sweep · granola N ·
 gmail N · cal N · slack N · apollo N · reading N · +A new / ~U updated / ✓C closed · <errors or ok>"}`.
 Report the same line, then the top of `cc_dashboard`. Don't write a brief; that's the `brief` skill.
