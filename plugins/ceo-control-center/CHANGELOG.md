@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0
+
+Agents as team members (named agents with lanes and a BrainBox playbook).
+
+- New `agents` skill: each agent works what it was assigned, picks up tasks in its lanes (code enforces lanes, today's picks and a work-in-progress cap), and hands each back as `review`. Never sends anything.
+- The sweep runs it nightly (§2c); on demand: "run the agents", "run Scout on 12".
+
 ## 0.4.0
 
 Renamed and moved into the `brainbox` marketplace. No behaviour change.

@@ -95,15 +95,10 @@ abstract. Why: the user decides what to build and sell; skip trivia.
 3. If one fits: `cc_update_task {id:<idea>, note:"from reading #<id>: <takeaway>"}`. A note, not progress.
 4. Clear the flag: `cc_update_task {id, fields:{next:null}}`. That marks it answered.
 
-## 2c. Asked of the agent ("✦ Ask AI")
-`cc_list_tasks {owner:"agent", status:"open"}`. A task with an `ask` is the user's own request, queued
-from the page; do those first, at most 5 a run (the rest wait, oldest first next time).
-1. `cc_op {op:"getTask", input:{id}}`, then do the ask with what this run may read: research, prep,
-   a draft reply. Never send anything. Why: the routine is read-only on every source.
-2. Save the output: `cc_save_doc {kind:"prep", key:"task-<id>", md}` (a short answer can be the note itself).
-3. Hand it back: `cc_update_task {id, by:"agent", fields:{owner:"me", need:"review"}, note:"<what was
-   done, where the output is>"}`. If it can't be done read-only, hand back the same way with the reason.
-   Why: an ask that sits unanswered teaches the user to stop asking.
+## 2c. The agents
+Run the `agents` skill: every active agent works its assigned tasks, then picks up what it can in its lanes,
+and hands each back as `review`. Tasks still owned by the generalist `agent` with an `ask` are done the same
+way, acting as `by:"agent"` (max 5). Why: agents are team members; this is their nightly shift.
 
 ## 3. Close what resolved
 `cc_list_tasks {status:"open", limit:200}`, then for tasks from these sources:

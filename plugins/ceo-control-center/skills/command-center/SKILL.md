@@ -13,7 +13,7 @@ Tools: `cc_dashboard`, `cc_add_tasks`, `cc_update_task`, `cc_list_tasks`, `cc_se
 (companies and people, pipeline), `cc_goals`, `cc_cursor`, `cc_feedback`, and for saved markdown
 `cc_save_doc`, `cc_get_doc`, `cc_list_docs`. All state changes go through them; never invent ids.
 Task vocabulary: `need` is what the owner must do (decide, reply, review, do, wait, approve, signal,
-idea, read, offer); `owner` is me, agent or a person's subject id.
+idea, read, offer); `owner` is me, agent (any agent), `agent:<id>` (a named agent such as Scout) or a person's subject id.
 
 **`by`:** anything the user asks for in chat is filed or changed with `by: "me"`, which needs no
 source (their words are the source). Only what you find yourself (a sweep) is `by: "agent"` and needs one.
@@ -63,6 +63,8 @@ source (their words are the source). Only what you find yourself (a sweep) is `b
 - **"Show my pipeline"** -> `cc_subject { action: "list", lane: "customers" }` (or the lane asked about).
 - **"What's the plan today"** -> do the brief (see the `brief` skill).
 - **"Sweep now"** -> the `sweep` skill.
+- **"Run the agents" / "run Scout" / "give 12 to Scout"** -> the `agents` skill (assign first when a task is named).
+  "Who's on the team" -> `cc_op {op:"agents", input:{action:"list"}}`.
 
 ## First turn of a session
 Check `cc_list_tasks { owner: "agent", need: "do", status: "open" }`. These are offers the user
