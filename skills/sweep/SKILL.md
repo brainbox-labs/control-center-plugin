@@ -37,6 +37,10 @@ File one `cc_add_tasks` batch per source (`by:"agent"`, max 50, all or nothing: 
 and resend). Item fields: `title lane need next outcome due about key src_type src_url src_quote
 owner offer note`. `about` is a subject by name.
 
+While reading, keep each Granola meeting (key `granola:<meetingId>`; notes/summary as `text`, `title`,
+`participants`, `url`, `at`) and each Gmail thread (key `gmail:<threadId>`; the summary or snippets you
+already read as `text`, `participants` with emails) in a list for step 5. Notes and summaries only, never transcripts.
+
 **Granola**: search meetings since the cursor, then read them (max 10 per call). Notes and summaries,
 not transcripts; pull a transcript chunk only if a commitment is ambiguous. Why: cost.
 - what the user said they'd do -> `do`
@@ -142,6 +146,8 @@ linkedin?, touch?}` matches by name, so repeating is safe; it returns the id for
   `cc_update_task {id, fields:{offer}}` instead.
 
 ## 5. Finish
+Hand over what you read: `cc_op {op:"brain", input:{action:"feed", items:[...]}}`, once per 50 items.
+No filtering or status check; cc decides what reaches the brain. Add its line (`brain +N`) to the run log.
 Append the run log: `cc_save_doc {kind:"note", key:"runs", mode:"append", md:"sweep · granola N ·
 gmail N · cal N · slack N · apollo N · reading N · +A new / ~U updated / ✓C closed · <errors or ok>"}`.
 Report the same line, then the top of `cc_dashboard`. Don't write a brief; that's the `brief` skill.
