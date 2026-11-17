@@ -73,7 +73,7 @@ dashboard get a text version.
 - **Loads** only fonts from Google Fonts in the dashboard; no outside scripts or trackers.
 - **Runs** nothing on your computer. No local server, no hooks, no telemetry or analytics.
 
-See [PRIVACY.md](PRIVACY.md) for retention and deletion. MIT licensed.
+Privacy policy: https://control-center-v1.web.app/privacy (summary in [PRIVACY.md](PRIVACY.md): retention and deletion). MIT licensed.
 
 ## Feedback
 
