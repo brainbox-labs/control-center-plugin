@@ -18,7 +18,11 @@ Use this skill to ask questions of your company's BrainBox brain. The brain expo
 
 ## BrainBox MCP connection
 
-This plugin bundles the BrainBox org MCP (server `brainbox`, `https://ctx.brainbox-ai.app/api/org-mcp`). It is the org door: OAuth sign-in, one connection across every project, and each tool takes a `projectId`. On first use Claude asks the user to sign in to BrainBox (one click). If the tools are missing, connect or authenticate the `brainbox` server (in Claude Code: `/mcp`), or run `/reload-plugins` after installing.
+This plugin bundles the BrainBox org MCP (server `brainbox`, `https://ctx.brainbox-ai.app/api/org-mcp`). It is the org door: OAuth sign-in, one connection across every project, and each tool takes a `projectId`. The server does not prompt for sign-in on its own.
+
+After `/reload-plugins`, the plugin's server shows as `plugin:brain:brainbox` with status "Needs authentication" and its real tools do not exist yet. Call the `mcp__plugin_brain_brainbox__authenticate` tool (no arguments): it returns an authorization URL to give to the user. Once they authorize, the real tools appear with no restart. If the localhost callback page fails to load (remote sessions), have the user paste the callback URL and call `mcp__plugin_brain_brainbox__complete_authentication` with it. Manual fallback: `/mcp`, then `plugin:brain:brainbox`, then Authenticate.
+
+If the user already has a claude.ai BrainBox connector on `/api/org-mcp`, the tools will appear twice; either copy works.
 
 Advanced alternative: the project door (`/api/mcp`) serves a single project and needs a project-scoped `bb_proj_` key. Prefer the bundled org door.
 

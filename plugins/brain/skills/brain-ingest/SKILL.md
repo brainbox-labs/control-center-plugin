@@ -1,11 +1,11 @@
 ---
 name: brain-ingest
-description: "Use this skill when the user wants to ingest a Postgres or Trino database, dbt project, documents or an Agent Skill into BrainBox. One command does the whole pipeline. Invoke for: connect my database to BrainBox, add documents to the brain, push my schema, train BrainBox on my data."
+description: "Use this skill when the user wants to ingest a Postgres, Trino or Athena database, SQL files, documents or an Agent Skill into BrainBox. One command does the whole pipeline. Invoke for: connect my database to BrainBox, add documents to the brain, push my schema, train BrainBox on my data."
 ---
 
 # brain-ingest: Ingest Data into BrainBox
 
-Teach BrainBox about the user's data: Postgres and Trino schemas, dbt projects and documents, turned into an annotated context layer that agents can query.
+Teach BrainBox about the user's data: Postgres, Trino and Athena schemas, SQL files and documents, turned into an annotated context layer that agents can query.
 
 ## Before you start
 
@@ -23,7 +23,7 @@ The CLI runs via `npx -y @brainbox-labs/cli@latest <cmd>`, or as `brainbox <cmd>
 
 | What you have | Path |
 |---|---|
-| Postgres or Trino database, dbt project, runbooks, policy docs | **One-shot ingest** (below) |
+| Postgres, Trino or Athena database, SQL files, runbooks, policy docs | **One-shot ingest** (below) |
 | Meeting notes, emails, support tickets, Slack threads (raw events) | **Process events** (below) |
 | Files to merge into a reusable Agent Skill | **Agent Skill** (below) |
 
@@ -32,16 +32,18 @@ If unsure: recent, time-stamped day-to-day content goes to process events; struc
 ## One-shot ingest
 
 ```bash
-brainbox ingest <source> [--project <name>] [--review]
+brainbox ingest <source...> [--project <name>] [--tables a,b] [--review] [--analysis-depth none|shallow|deep] [--json]
 ```
 
-`<source>` is one of:
+`<source>` is one or more of:
 
-- `postgres://...` or `trino://user[:password]@host[:port]/catalog[/schema]`
-- a docs path or glob (PDF, DOCX and HTML are converted to markdown automatically)
-- `--dbt <dir>` for a dbt project
+- `postgres://...`, `trino://user[:password]@host[:port]/catalog[/schema]` or `athena://...`
+- `.sql` files, directories or globs
+- document paths or globs (PDF, DOCX and HTML are converted to markdown automatically)
 
-This single command runs the whole pipeline: init, stage, commit, push, context generation, polling until ready, and approve. Find the database URL in the user's README or ask them. With `--review` it stops before approving and prints a review URL.
+This single command runs the whole pipeline: init, stage, commit, push, context generation, polling until ready, and approve. It creates `.brainbox/` if missing and names the project after the current directory unless `--project` is given. Find the database URL in the user's README or ask them. `--tables a,b` limits which tables are ingested; `--analysis-depth` controls document analysis (`deep` for dense runbooks, `none` to store verbatim). With `--review` it stops before approving and prints a review URL.
+
+With `--json` the result is `{org, project, projectId, published, versions[], reviewUrl, warnings[]}`. Always surface `warnings[]` and `reviewUrl` to the user.
 
 If the CLI reports `0 tables`, the connection worked but the schema was not found: rerun with `--verbose`. Trino has no enforced keys or indexes, so only tables and columns are staged.
 
@@ -79,7 +81,7 @@ Use this only when `brainbox ingest` fails partway and you need to see or rerun 
 
 ```bash
 brainbox repo init --org <name> --project <name>   # or: brainbox repo clone <project-name>
-brainbox meta ingest db <url>                      # or: brainbox meta ingest doc <files...>
+brainbox meta ingest db <url>                      # or: meta ingest doc <files...>, or: meta ingest dbt <dir>
 brainbox repo commit -m "add <source>"
 brainbox repo push
 brainbox repo meta create
@@ -87,7 +89,7 @@ brainbox repo meta status                          # poll until status: ready (u
 brainbox repo meta approve                         # only after user review
 ```
 
-Other options: `--profile-data[=full]` adds column statistics (derived stats, not raw rows; `full` also sends up to 50 distinct values per column, so check `brainbox profile preview` first if a column may hold PII). `--analysis-depth <none|shallow|deep>` controls document analysis (`deep` for dense runbooks, `none` to store verbatim). `brainbox meta ingest mcp <url>` stages an MCP server.
+Other options: `--profile-data[=full]` adds column statistics (derived stats, not raw rows; `full` also sends up to 50 distinct values per column, so check `brainbox profile preview` first if a column may hold PII). `brainbox meta ingest mcp <url>` stages an MCP server.
 
 **Customer tenants:** commands that resolve org/project accept `--tenant <name>` instead of `--project <name>`. Use it when the user gives a tenant name: tenant overlay projects are named "<tenant name> - Tenant Overlay", so `--project` with the tenant name would silently create an empty orphan project. `--tenant` matches the exact tenant name and fails if none exists.
 

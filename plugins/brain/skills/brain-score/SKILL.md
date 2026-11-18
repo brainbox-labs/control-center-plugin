@@ -9,7 +9,7 @@ Run a fixed evaluation protocol against a BrainBox brain and save a versioned ma
 
 ## Prerequisites
 
-This skill calls the BrainBox org MCP bundled with this plugin (server `brainbox`, the org door: OAuth sign-in, one connection across projects). If its tools are missing, connect the server (in Claude Code: `/mcp`) and sign in to BrainBox. Call `list_projects` first, choose the project to score (ask the user if ambiguous), and pass its `projectId` to every tool below. See `brain-recall` for how the tools route.
+This skill calls the BrainBox org MCP bundled with this plugin (server `brainbox`, the org door: OAuth sign-in, one connection across projects). If its tools are missing, the server needs authentication: call `mcp__plugin_brain_brainbox__authenticate`, give the user the URL, and see `brain-recall` (BrainBox MCP connection) for the fallbacks. Call `list_projects` first, choose the project to score (ask the user if ambiguous), and pass its `projectId` to every tool below. See `brain-recall` for how the tools route.
 
 ## Evaluation protocol
 
