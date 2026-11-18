@@ -1,6 +1,6 @@
 ---
 name: brain-recall
-description: "Use this skill when the user wants to query their BrainBox brain: ask business questions, look up domain knowledge, trace workflows, explore data, or understand entity relationships. The BrainBox MCP is bundled with this plugin. Invoke for: ask the brain, what does BrainBox know about X, query the domain model, look up business rules."
+description: "Use this skill when the user wants to query their BrainBox brain: ask business questions, look up domain knowledge, trace workflows, explore data, or understand entity relationships. The BrainBox MCP is bundled with this plugin; no CLI or server setup needed. Invoke for: ask the brain, what does BrainBox know about X, query the domain model, look up business rules."
 ---
 
 # brain-recall: Query the BrainBox Brain
@@ -18,7 +18,13 @@ Use this skill to ask questions of your company's BrainBox brain. The brain expo
 
 ## BrainBox MCP connection
 
-This plugin bundles the BrainBox org MCP (server `brainbox`). On first use Claude asks the user to sign in to BrainBox. If the tools are missing, the user needs to connect or authenticate the `brainbox` server (in Claude Code: `/mcp`).
+This plugin bundles the BrainBox org MCP (server `brainbox`, `https://ctx.brainbox-ai.app/api/org-mcp`). It is the org door: OAuth sign-in, one connection across every project, and each tool takes a `projectId`. The server does not prompt for sign-in on its own.
+
+After `/reload-plugins`, the plugin's server shows as `plugin:brain:brainbox` with status "Needs authentication" and its real tools do not exist yet. Call the `mcp__plugin_brain_brainbox__authenticate` tool (no arguments): it returns an authorization URL to give to the user. Once they authorize, the real tools appear with no restart. If the localhost callback page fails to load (remote sessions), have the user paste the callback URL and call `mcp__plugin_brain_brainbox__complete_authentication` with it. Manual fallback: `/mcp`, then `plugin:brain:brainbox`, then Authenticate.
+
+If the user already has a claude.ai BrainBox connector on `/api/org-mcp`, the tools will appear twice; either copy works.
+
+Advanced alternative: the project door (`/api/mcp`) serves a single project and needs a project-scoped `bb_proj_` key. Prefer the bundled org door.
 
 ---
 
@@ -79,7 +85,7 @@ Wiki pages are synthesized narrative (entity briefs and observed patterns) writt
 |---|---|
 | `recall_wiki` | Instance-shaped questions ("what is happening with Acme"). Filter by `entity`, `kind` (e.g. `"entity-brief"`, `"synthesis"`), or `tag`. Pass `q` for free-text search. Returns a bare array of entries with a body excerpt; each entry's `id` field (not `pageId`) is what `get_wiki_page` expects. With `q`, entries may carry `matchedPassage` (`headingPath` + `text`): read it before fetching the whole page. |
 | `get_wiki_page` | Full body of a specific page when the excerpt isn't enough. |
-| `save_wiki_page` | File new synthesis. Search `recall_wiki` first and reuse an existing page's id to update it rather than creating a duplicate. To add to a page without re-sending it, pass `mode: "append"` with `id` and `body`. |
+| `save_wiki_page` | File new synthesis. Search `recall_wiki` first and reuse an existing page's id (from `save_wiki_page`'s own `pageId` field) to update it rather than creating a duplicate. To add to a page without re-sending it, pass `mode: "append"` with `id` and `body`. |
 
 **Routing rule:** prefer `recall_wiki` over `recall_domain`/`recall_traces` for instance-shaped questions: it is synthesized narrative, not raw structure or a single trace.
 
@@ -91,7 +97,7 @@ Skills are curated, versioned procedures: "how specific work gets done here."
 
 | Tool | When to use |
 |---|---|
-| `list_skills` | Check before any multi-step or procedural task; a curated skill may already describe how the work is done in this project. |
+| `list_skills` | Check before starting any multi-step or procedural task; a curated skill may already describe how the work is done in this project. |
 | `get_skill` | Fetch a skill's full body by name once `list_skills` (or `get_index`'s `skillsCount`) suggests one applies. |
 
 A non-zero `skillsCount` in `get_index` is the signal to call `list_skills` before improvising a multi-step task.
@@ -111,13 +117,13 @@ Personal pages hold a specific person's own preferences and private context, dis
 
 ## Data tools
 
-Data tools are project-specific; their names come from the index. They run approved SQL against the live database and return structured results. Call them by name after discovering them via `get_index`.
+Data tools are project-specific; their names come from the index. They run approved SQL against the live database and return structured results. Call them by name after discovering them via `get_index`. If a data tool returns a connection error, the project may route data tools through the local dev server: use `brain-workflow` to start it.
 
 ---
 
 ## Composing grounded answers
 
-The best answers combine:
+The best answers combine all four:
 
 1. **Traces**: what has actually happened recently (`recall_traces`)
 2. **Wiki pages**: synthesized narrative on a specific entity (`recall_wiki`)
@@ -128,7 +134,7 @@ The best answers combine:
 
 ## If a tool returns nothing useful
 
-- No traces for an entity: events may not have been processed yet. Events and documents are added to the brain through BrainBox (ctx.brainbox-ai.app).
+- No traces for an entity: events may not have been processed yet. Suggest `brain-ingest` with the relevant meeting notes or emails.
 - No wiki pages: nothing has been synthesized yet for this entity. Fall back to `recall_traces`/`recall_domain`, and consider `save_wiki_page` once you've pieced together a useful answer.
 - No domain model hits: try `recall_domain` with a broader `name`, or `kind: "workflow"` under a different name.
-- No relevant data tools in the index: the source may not be connected yet; events and documents are added through BrainBox (ctx.brainbox-ai.app).
+- No relevant data tools in the index: the source may not be connected yet: suggest `brain-ingest` to ingest it.

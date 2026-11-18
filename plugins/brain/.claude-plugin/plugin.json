@@ -1,11 +1,11 @@
 {
   "name": "brain",
   "displayName": "BrainBox Brain",
-  "version": "0.1.0",
-  "description": "Query your company's BrainBox brain: domain model, traces, wiki, skills, from any Claude surface.",
+  "version": "0.2.0",
+  "description": "Query, set up and feed your company's BrainBox brain: recall from the domain model, traces and wiki; ingest databases and docs; run workflows; score and upgrade.",
   "author": {
     "name": "BrainBox Labs"
   },
   "license": "MIT",
-  "keywords": ["brainbox", "brain", "knowledge", "domain-model", "mcp", "recall"]
+  "keywords": ["brainbox", "brain", "knowledge", "domain-model", "mcp", "recall", "ingest", "setup", "workflows", "cli"]
 }
