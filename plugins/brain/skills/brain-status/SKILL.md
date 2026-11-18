@@ -29,7 +29,7 @@ If the versions differ, tell the user `brain-upgrade` will update it.
 brainbox whoami --json
 ```
 
-Prints the user, organization and API URL; exit code 1 means not logged in, so tell the user to run `brainbox login`. Do not read `~/.brainbox/credentials.json` directly. (A legacy `BRAINBOX_API_KEY` in the environment or `.env` still works for the CLI; do not recommend setting one up.)
+Returns `{signedIn, source, user:{email}, org:{id,slug,name}, apiUrl, mcpUrl}`. `source` is `"credentials"` (signed in via `brainbox login`) or `"env"` (a legacy `BRAINBOX_API_KEY` is in use); show it in the summary so the user knows which. If not signed in it prints `{"signedIn":false}` and exits 1: tell the user to run `brainbox login`. Do not read `~/.brainbox/credentials.json` directly. A legacy env key still works; do not recommend setting one up.
 
 ### 3. Project initialized
 
@@ -50,10 +50,10 @@ Prints local commits and remote version history. A `401` or `403` is a sign-in p
 ### 5. Dev server
 
 ```bash
-cat .brainbox/dev.pid 2>/dev/null && echo "running (PID $(cat .brainbox/dev.pid))" || echo "not running"
+cat .brainbox/dev.pid 2>/dev/null && curl -sf localhost:3100/mcp >/dev/null && echo "running (PID $(cat .brainbox/dev.pid))" || echo "not running"
 ```
 
-Not running is fine unless the user is about to run a workflow; note it, do not fail on it.
+Use the port from the user's `--port` if they set one (default 3100). A PID file with a failing curl means a stale server: report it as not running. Not running is fine unless the user is about to run a workflow; note it, do not fail on it.
 
 ### 6. Active layer (only if connectivity succeeded)
 
@@ -79,7 +79,7 @@ Reports whether a context draft is `processing`, `ready` or `failed`. `processin
 
 ```
 CLI             ok v0.4.1 (latest: v0.4.1)
-Signed in       ok (you@acme.com, org acme)
+Signed in       ok (you@acme.com, org acme, via credentials)
 Project         acme / analytics
 Connectivity    ok (3 remote versions)
 Dev server      not running

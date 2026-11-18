@@ -25,7 +25,7 @@ The CLI runs via `npx -y @brainbox-labs/cli@latest <cmd>`, or `brainbox <cmd>` i
 Check whether the dev server is already running:
 
 ```bash
-cat .brainbox/dev.pid 2>/dev/null && echo "server running" || echo "not running"
+cat .brainbox/dev.pid 2>/dev/null && curl -sf localhost:3100/mcp >/dev/null && echo "server running" || echo "not running"
 ```
 
 ## Start the local dev server
@@ -34,7 +34,7 @@ cat .brainbox/dev.pid 2>/dev/null && echo "server running" || echo "not running"
 brainbox dev start [--db <postgres-url>] [--port 3100]
 ```
 
-The CLI reads `DATABASE_URL` from the environment if `--db` is not passed. On success it prints `MCP server ready at http://localhost:3100/mcp`. Use `--no-brain` to skip domain model tools.
+The CLI reads `DATABASE_URL` from the environment if `--db` is not passed. The server listens on `http://localhost:<port>/mcp` (default port 3100). Confirm it is up by checking that `.brainbox/dev.pid` exists and that `curl -sf localhost:<port>/mcp` succeeds; do not rely on matching the CLI's output text. Use `--no-brain` to skip domain model tools.
 
 ## Orchestration pattern
 

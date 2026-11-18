@@ -23,7 +23,7 @@ Useful forms:
 - **Use a named project:** `init --project <name>`.
 - **Plugin already installed:** add `--skip-plugin`.
 
-To check whether the user is already signed in first, run `brainbox whoami` (exit code 1 means not logged in).
+To check whether the user is already signed in first, run `brainbox whoami` (it exits 1 and prints `{"signedIn":false}` with `--json` when not logged in).
 
 ## 2. Reload plugins
 
