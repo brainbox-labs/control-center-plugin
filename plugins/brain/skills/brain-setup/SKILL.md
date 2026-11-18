@@ -1,6 +1,6 @@
 ---
 name: brain-setup
-description: "Use this skill for first-time BrainBox setup: one command signs the user in, picks a project (or the Olist demo), and gets the first question answered in about 2 minutes. No install needed. Invoke for: set up BrainBox, get started with BrainBox, log in to BrainBox, I'm new to BrainBox."
+description: "Use this skill for first-time BrainBox setup: one command signs the user in, picks a project, and gets the first question answered in about 2 minutes. No install needed. Invoke for: set up BrainBox, get started with BrainBox, log in to BrainBox, I'm new to BrainBox."
 ---
 
 # brain-setup: First-Time BrainBox Setup
@@ -26,7 +26,6 @@ npx -y @brainbox-labs/cli@latest init --json
 
 Useful forms:
 
-- **Try it with no data of their own:** `init --demo olist` (the Olist demo project).
 - **Use a named project:** `init --project <name>`.
 - **Plugin already installed:** add `--skip-plugin`.
 
@@ -38,7 +37,7 @@ If `init` installed the plugin, the user runs `/reload-plugins` (or restarts Cla
 
 ## 3. Ask the first question
 
-Use `brain-recall` to answer something real. On the demo path, run `brainbox demo olist --json` (returns `{org, projectId, projectName, sampleQuestions[]}`) and ask `sampleQuestions[0]`. Otherwise try something like "what does BrainBox know about our customers?". An answered question is the finish line for setup.
+If the project has no data yet, ask the user which data to connect, then run `brainbox ingest <postgres://… | trino://… | path/to/docs>` (see `brain-ingest` for details). Then use `brain-recall` to answer something real, like "what does BrainBox know about our customers?". An answered question is the finish line for setup.
 
 ## Done
 
