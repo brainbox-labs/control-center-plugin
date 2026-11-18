@@ -38,9 +38,10 @@ and resend). Item fields: `title lane need next outcome due about key src_type s
 owner offer note`. `about` is a subject by name.
 
 **Long-term context.** Every Granola meeting and every Gmail thread you actually read (you already skip newsletters,
-receipts and noise) goes into the feed `items`: key `granola:<meetingId>` or `gmail:<threadId>`, the notes or summary you
-already formed as `text` (never transcripts, never full raw email bodies), plus `title`, `participants` (with emails),
-`url`, `at`. Mark `keep: true` with a one-line `why` for what will still matter weeks from now for the founder's goals in
+receipts and noise) goes into the feed `items`: key `granola:<meetingId>` or `gmail:<threadId>`, plus `title`,
+`participants` (with emails), `url`, `at` (the meeting time). `text`: for Granola, Granola's summary **verbatim** plus the
+private notes if any, unedited (why: Granola deletes notes after 30 days on our plan, and its summary is already the
+interpretation, so the brain keeps it as is); for Gmail, the summary you formed. Never transcripts or raw email bodies. Mark `keep: true` with a one-line `why` for what will still matter weeks from now for the founder's goals in
 goals.md (winning customers, hiring, raising); judge it, don't apply categories. Granola meetings are always `keep: true`.
 Anything else goes in with `keep` left off. Why: cc logs everything you read as ground truth and delivers only the marked
 items to the brain, retrying until sent.
@@ -54,6 +55,9 @@ not transcripts; pull a transcript chunk only if a commitment is ambiguous. Why:
 - ideas floated ("what if we...") -> need `idea` with `hyp:{believe:"we believe X will cause Y",
   status:"untested"}`, note `origin: <meeting title>`, never a `do`. Why: ideas are hypotheses to test.
 Key `granola:<meetingId>:<slug>`.
+- A note with no other participant (started ad hoc, not from the invite): match the calendar event that overlaps its
+  time and take that event's title and attendees as the people. Why: the Nov 17 "Shrey / Gaurav" call came in as an
+  unnamed "infra contact" task (feedback #125).
 
 **Gmail**: threads after the cursor, excluding promotions, social, forums. Skip newsletters, receipts,
 notifications, DMARC reports, invite bots and cold pitches to the user. Don't use unread status: read

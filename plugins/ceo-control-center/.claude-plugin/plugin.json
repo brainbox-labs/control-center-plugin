@@ -1,7 +1,7 @@
 {
   "name": "ceo-control-center",
   "displayName": "CEO Command Center by BrainBox",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Keeps a founder's open loops from dropping: files every reply owed, promise made and decision pending, and shows one ranked screen of what needs you.",
   "author": {
     "name": "BrainBox Labs"
