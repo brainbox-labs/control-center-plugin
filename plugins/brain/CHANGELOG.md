@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+brain-setup no longer claims `init` creates `.brainbox/` and a project on its own: that needs `--project`, and the one-step path is `brainbox ingest --project <name> <source>`.
+
 ## 0.2.2
 
 brain-setup now inspects the working directory before asking what to connect: it scans for docs, SQL files and database URLs (never printing passwords), recommends a concrete `brainbox ingest` command with counts, and suggests a first question drawn from what was ingested.
