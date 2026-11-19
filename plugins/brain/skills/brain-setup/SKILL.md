@@ -15,7 +15,7 @@ The CLI runs from public npm, so nothing needs installing: `npx -y @brainbox-lab
 npx -y @brainbox-labs/cli@latest init --json
 ```
 
-`init` never prompts. It logs the user in if needed (a device-code flow in the browser; add `--no-browser` on a headless machine), picks or creates a project, writes `.brainbox/config.json`, installs this plugin itself, and ends with numbered next steps. Credentials are stored by the CLI. Do not ask the user for an API key or write a `.env`.
+`init` never prompts. It logs the user in if needed (a device-code flow in the browser; add `--no-browser` on a headless machine), installs this plugin itself, and ends with numbered next steps. Credentials are stored by the CLI. Do not ask the user for an API key or write a `.env`.
 
 `--json` returns `{signedIn, project, plugin, nextSteps[]}` where `plugin` is `installed`, `no-claude`, `failed` or `skipped`. Follow `nextSteps` in order. If `plugin` is `no-claude` or `failed`, show the user the manual install lines:
 
@@ -26,7 +26,7 @@ npx -y @brainbox-labs/cli@latest init --json
 
 Useful forms:
 
-- **Use a named project:** `init --project <name>`.
+- **Use a named project:** `init --project <name>`. Without `--project`, `init` does not create `.brainbox/` or a project; `brainbox ingest --project <name> <source>` (step 3) creates both in one go.
 - **Plugin already installed:** add `--skip-plugin`.
 
 To check whether the user is already signed in first, run `brainbox whoami` (it exits 1 and prints `{"signedIn":false}` with `--json` when not logged in).
