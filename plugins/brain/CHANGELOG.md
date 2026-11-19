@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+brain-setup now inspects the working directory before asking what to connect: it scans for docs, SQL files and database URLs (never printing passwords), recommends a concrete `brainbox ingest` command with counts, and suggests a first question drawn from what was ingested.
+
 ## 0.2.1
 
 brain-setup no longer offers the Olist demo (parked in CLI 0.15.0); first run goes straight to connecting the user's data with `brainbox ingest`.

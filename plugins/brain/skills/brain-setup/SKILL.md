@@ -37,7 +37,13 @@ If `init` installed the plugin, the user runs `/reload-plugins` (or restarts Cla
 
 ## 3. Ask the first question
 
-If the project has no data yet, ask the user which data to connect, then run `brainbox ingest <postgres://… | trino://… | path/to/docs>` (see `brain-ingest` for details). Then use `brain-recall` to answer something real, like "what does BrainBox know about our customers?". An answered question is the finish line for setup.
+If the project has no data yet, do not stop at asking. Inspect the working directory first and come back with a concrete recommendation:
+
+- **Scan (read-only, skip `node_modules`, `.git`, build output, `.env*` contents):** docs (`*.md`, `*.pdf`, `*.docx`, `*.html`, `docs/`, `runbooks/`, `policies/`), SQL (`*.sql`, `schema.sql`, `migrations/`), and database hints (`DATABASE_URL`, `postgres://`, `trino://`, `athena://` in `README*`, `docker-compose*.yml`, `.env.example`, config files). Never print a URL's password; if only `.env` holds the URL, say it exists and ask before using it.
+- **Recommend** the best fit, with counts: e.g. "Found 42 markdown docs in `docs/` and 6 migrations in `db/migrations/`. I suggest ingesting both: `brainbox ingest docs/ db/migrations/`." Prefer structural content (schemas, policies, runbooks) for ingest; time-stamped notes, emails or tickets go to process events (see `brain-ingest`).
+- **Confirm, then run.** Offer the exact command and ask one yes/no. If the folder has nothing useful (empty, or only app code), say so and ask for a database URL or a docs path instead.
+
+Then use `brain-recall` to answer something real, ideally a question drawn from what was just ingested (e.g. a table or doc you saw), or "what does BrainBox know about our customers?". An answered question is the finish line for setup.
 
 ## Done
 
