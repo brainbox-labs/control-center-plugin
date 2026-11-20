@@ -6,7 +6,7 @@ Installable from Codex: the repo is now also a Codex marketplace (`.agents/plugi
 
 ## 0.2.4
 
-brain-setup offers the Olist sample brain (`brainbox demo olist`) when the directory scan finds nothing to ingest, so a first question never requires data of your own. Needs `@brainbox-labs/cli` 0.16.4 or later.
+brain-setup offers the Olist sample brain (`brainbox demo olist`) when the directory scan finds nothing to ingest, so a first question never requires data of your own. It credits Olist (CC BY-NC-SA 4.0), suggests starter questions over the domain model and wiki, and nudges toward `brain-ingest` after the first answer. Needs `@brainbox-labs/cli` 0.16.4 or later.
 
 ## 0.2.3
 
