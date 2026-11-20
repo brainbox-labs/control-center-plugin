@@ -1,0 +1,26 @@
+{
+  "name": "brain",
+  "version": "0.2.3",
+  "description": "Query, set up and feed your company's BrainBox brain: recall from the domain model, traces and wiki; ingest databases and docs; run workflows; score and upgrade.",
+  "author": {
+    "name": "BrainBox Labs",
+    "email": "gaurav@brainbox-ai.app"
+  },
+  "homepage": "https://brainbox-ai.app/",
+  "repository": "https://github.com/brainbox-labs/control-center-plugin",
+  "license": "MIT",
+  "keywords": ["brainbox", "brain", "knowledge", "domain-model", "mcp", "recall", "ingest", "setup", "workflows", "cli"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "BrainBox Brain",
+    "shortDescription": "Your company's knowledge brain",
+    "longDescription": "Connects to the BrainBox MCP server to query project domain models, intelligence traces, wiki pages, skills and live data tools, with skills for setup, ingestion, workflows, scoring and upgrades.",
+    "developerName": "BrainBox Labs",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Write"],
+    "websiteURL": "https://brainbox-ai.app/",
+    "defaultPrompt": [
+      "Ask my BrainBox brain what it knows about a business topic, entity, workflow, or recent event"
+    ]
+  }
+}

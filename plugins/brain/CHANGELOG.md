@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+Installable from Codex: the repo is now also a Codex marketplace (`.agents/plugins/marketplace.json`) and `brain` carries a `.codex-plugin/plugin.json`, sharing the same `skills/` and `.mcp.json` as the Claude plugin.
+
 ## 0.2.3
 
 brain-setup no longer claims `init` creates `.brainbox/` and a project on its own: that needs `--project`, and the one-step path is `brainbox ingest --project <name> <source>`.

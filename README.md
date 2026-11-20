@@ -9,10 +9,20 @@ A Claude Code plugin marketplace from BrainBox Labs.
 
 ## Install
 
+Claude Code:
+
 ```
 /plugin marketplace add brainbox-labs/control-center-plugin
 /plugin install ceo-control-center@brainbox
 /plugin install brain@brainbox
+```
+
+Codex (`brain` only; same skills and MCP server):
+
+```
+codex plugin marketplace add brainbox-labs/control-center-plugin
+codex plugin add brain@brainbox
+codex mcp login brainbox
 ```
 
 ## License
