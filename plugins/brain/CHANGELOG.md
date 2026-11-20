@@ -4,6 +4,10 @@
 
 Installable from Codex: the repo is now also a Codex marketplace (`.agents/plugins/marketplace.json`) and `brain` carries a `.codex-plugin/plugin.json`, sharing the same `skills/` and `.mcp.json` as the Claude plugin.
 
+## 0.2.4
+
+brain-setup offers the Olist sample brain (`brainbox demo olist`) when the directory scan finds nothing to ingest, so a first question never requires data of your own. Needs `@brainbox-labs/cli` 0.16.4 or later.
+
 ## 0.2.3
 
 brain-setup no longer claims `init` creates `.brainbox/` and a project on its own: that needs `--project`, and the one-step path is `brainbox ingest --project <name> <source>`.
