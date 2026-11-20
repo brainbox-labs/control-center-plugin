@@ -1,6 +1,6 @@
 {
   "name": "brain",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Query, set up and feed your company's BrainBox brain: recall from the domain model, traces and wiki; ingest databases and docs; run workflows; score and upgrade.",
   "author": {
     "name": "BrainBox Labs",
