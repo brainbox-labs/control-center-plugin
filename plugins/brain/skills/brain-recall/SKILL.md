@@ -87,6 +87,8 @@ Wiki pages are synthesized narrative (entity briefs and observed patterns) writt
 | `get_wiki_page` | Full body of a specific page when the excerpt isn't enough. |
 | `save_wiki_page` | File new synthesis. Search `recall_wiki` first and reuse an existing page's id (from `save_wiki_page`'s own `pageId` field) to update it rather than creating a duplicate. To add to a page without re-sending it, pass `mode: "append"` with `id` and `body`. |
 
+Docs synced from a folder (`brain-ingest`, Sync) live under a wiki namespace, so scope `recall_wiki` and `list_wiki_pages` by that namespace when the question is about one docs folder.
+
 **Routing rule:** prefer `recall_wiki` over `recall_domain`/`recall_traces` for instance-shaped questions: it is synthesized narrative, not raw structure or a single trace.
 
 ---

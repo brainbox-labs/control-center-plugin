@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.2.5
+
+`brain-ingest` teaches `brainbox sync <dir>`: keeping a docs folder (a repo's `kb/` or `docs/`) in step with the Brain by stable `sourceKey`, optional committed client-side transforms, `--dry-run` first, and deletes that are never archived without the user's explicit yes (`pendingDeletes`, then `brainbox prune`). `brain-recall` notes synced docs live under a wiki namespace; `brain-setup` points `kb/` and `docs/` folders at sync. Needs `@brainbox-labs/cli` 0.17.0 or later for `brainbox prune`.
 
 Installable from Codex: the repo is now also a Codex marketplace (`.agents/plugins/marketplace.json`) and `brain` carries a `.codex-plugin/plugin.json`, sharing the same `skills/` and `.mcp.json` as the Claude plugin.
 

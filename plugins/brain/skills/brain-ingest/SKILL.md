@@ -1,6 +1,6 @@
 ---
 name: brain-ingest
-description: "Use this skill when the user wants to ingest a Postgres, Trino or Athena database, SQL files, documents or an Agent Skill into BrainBox. One command does the whole pipeline. Invoke for: connect my database to BrainBox, add documents to the brain, push my schema, train BrainBox on my data."
+description: "Use this skill when the user wants to ingest a Postgres, Trino or Athena database, SQL files, documents or an Agent Skill into BrainBox. One command does the whole pipeline. Invoke for: connect my database to BrainBox, add documents to the brain, push my schema, train BrainBox on my data, keep my docs folder synced."
 ---
 
 # brain-ingest: Ingest Data into BrainBox
@@ -25,9 +25,10 @@ The CLI runs via `npx -y @brainbox-labs/cli@latest <cmd>`, or as `brainbox <cmd>
 |---|---|
 | Postgres, Trino or Athena database, SQL files, runbooks, policy docs | **One-shot ingest** (below) |
 | Meeting notes, emails, support tickets, Slack threads (raw events) | **Process events** (below) |
+| A folder of docs to keep in step with the Brain (a repo's `kb/` or `docs/`) | **Sync** (below) |
 | Files to merge into a reusable Agent Skill | **Agent Skill** (below) |
 
-If unsure: recent, time-stamped day-to-day content goes to process events; structural, schema or policy content goes to one-shot ingest.
+A one-off set of documents goes to one-shot ingest; a folder that keeps changing goes to sync, so you never re-ingest it by hand. If unsure: recent, time-stamped day-to-day content goes to process events; structural, schema or policy content goes to one-shot ingest.
 
 ## One-shot ingest
 
@@ -66,6 +67,30 @@ No commit or push is needed. Call the `process_event` MCP tool directly: read ea
 - If the text is already processed (you wrote the summary), pass `interpret: false` to store it verbatim with no LLM call.
 - Always set `source.externalId` so retries do not duplicate the trace.
 - After each call, check `learningCandidates` and call `create_learning` for any with `confidence: high`.
+
+## Sync a docs folder
+
+```bash
+brainbox sync <dir> [--namespace <ns>] [--transform <name>] [--dry-run] [--force] [--analysis-depth ...] [--json]
+```
+
+Use this instead of re-running `brainbox ingest` on a folder that keeps changing. Sync keeps the folder in step with the Brain by a stable `sourceKey` per file: new and edited docs are ingested, unchanged ones are skipped. Run `--dry-run` first on a new folder to see what it would do. The namespace defaults to the folder name, and one sync root owns a namespace.
+
+**When the files need rewriting first** (strip internal sections, add frontmatter, flatten includes), write a small committed script at `.brainbox/transforms/<name>.mjs` and pass `--transform <name>`. Run `brainbox sync --help` for the script contract. Editing the script re-syncs the docs it touched.
+
+A frontmatter `sourceKey:` keeps a renamed file's identity, so the rename does not look like a delete plus a new doc. Use `--force` only for a doc that looks stuck after a failed ingest.
+
+### Deletes
+
+You have no terminal to answer prompts, so sync never archives anything on its own: it reports `pendingDeletes` (the pages whose files are gone). **Do NOT archive on the user's behalf.** Show the user those pages and ask:
+
+> These pages no longer have a file in the folder. Archive them in the Brain?
+>
+> - [title] (`[sourceKey]`)
+>
+> Tell me which to archive, or none.
+
+Only after the user explicitly says yes, archive exactly the approved ones with `brainbox prune <sourceKey...>`. Use `--prune` on sync only if they approve all of them. If they say no or do not answer, leave the pages in place.
 
 ## Agent Skill
 
