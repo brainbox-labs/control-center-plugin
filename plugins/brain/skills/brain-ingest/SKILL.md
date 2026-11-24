@@ -76,7 +76,7 @@ brainbox sync <dir> [--namespace <ns>] [--transform <name>] [--dry-run] [--force
 
 Use this instead of re-running `brainbox ingest` on a folder that keeps changing. Sync keeps the folder in step with the Brain by a stable `sourceKey` per file: new and edited docs are ingested, unchanged ones are skipped. Run `--dry-run` first on a new folder to see what it would do. The namespace defaults to the folder name, and one sync root owns a namespace.
 
-**When the files need rewriting first** (strip internal sections, add frontmatter, flatten includes), write a small committed script at `.brainbox/transforms/<name>.mjs` and pass `--transform <name>`. Run `brainbox sync --help` for the script contract. Editing the script re-syncs the docs it touched.
+**When the files need rewriting first** (strip internal sections, add frontmatter, flatten includes), write a small committed script at `.brainbox/transforms/<name>.mjs` (or `.ts`, as plain typed JS with no enums) and pass `--transform <name>`. Run `brainbox sync --help` for the script contract. Editing the script re-syncs the docs it touched.
 
 A frontmatter `sourceKey:` keeps a renamed file's identity, so the rename does not look like a delete plus a new doc. Use `--force` only for a doc that looks stuck after a failed ingest.
 
