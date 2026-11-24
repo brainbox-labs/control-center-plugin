@@ -90,7 +90,7 @@ You have no terminal to answer prompts, so sync never archives anything on its o
 >
 > Tell me which to archive, or none.
 
-Only after the user explicitly says yes, archive exactly the approved ones with `brainbox prune <sourceKey...>`. Use `--prune` on sync only if they approve all of them. If they say no or do not answer, leave the pages in place.
+Only after the user explicitly says yes, archive exactly the approved ones with `brainbox prune <sourceKey...>`, taking the keys verbatim from `pendingDeletes[].sourceKey` (they look like `kb%2Fold.md`). Prune exits 0 even when a key is unknown, so check `notFound` in its `--json` result and tell the user about any. Use `--prune` on sync only if they approve all of them. If they say no or do not answer, leave the pages in place.
 
 ## Agent Skill
 
