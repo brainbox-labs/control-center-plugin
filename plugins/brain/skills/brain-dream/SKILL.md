@@ -22,14 +22,14 @@ This is separate from the server's own synthesis (candidates built from trace de
 
 ## The pass
 
-1. **Orient.** `get_index`, `list_learnings`, and `list_wiki_pages` for the `memory/` namespace. Read the latest entry of the `memory/dream-log` page to learn when the last pass ran; use that time as `since`. If there is no log, this is the first pass: start from the oldest traces.
+1. **Orient.** `get_index`, `list_learnings`, and `list_wiki_pages` for the `memory/` namespace. Read the latest entry of the `memory/dream-log` page; it starts with the time that pass began, and that time is your `since`. Traces already named in the log can be skipped. If there is no log, this is the first pass: start from the oldest traces.
 2. **Gather.** `recall_traces` since the last pass, oldest first, for the project (narrow by entity or thread when the volume is large). Read the full body with `get_trace` for any trace that touches a learning or a wiki claim.
 3. **Verify.** For each active learning and each wiki claim that recent traces touch, decide: supported, contradicted or unverifiable. Spend effort where facts change (statuses, owners, dates, locations), not on settled definitions. Note the trace ids.
-4. **Merge.** Group what is known by subject. Make one wiki page per subject, in the `memory/` namespace or the namespace already used: update the existing page when there is one (`recall_wiki`, then `save_wiki_page` with `id` and `baseVersion`), create one when there is none. Write claims with the trace id beside them. When several learnings say the same thing, keep one and retire or supersede the rest. When a page is now a duplicate of another, use `archive_wiki_page` if your tool list has it (it appears only when the organization has agent archive tools turned on); otherwise overwrite the duplicate with a one-line pointer to the surviving page. Say in the log which you did.
+4. **Merge.** Group what is known by subject. Make one wiki page per subject, in the `memory/` namespace or the namespace already used: update the existing page when there is one (`recall_wiki`, then `save_wiki_page` with `id` and `baseVersion`), create one when there is none. Write claims with the trace id beside them. When several learnings say the same thing, keep one and retire or supersede the rest. When a page is now a duplicate of another, use `archive_wiki_page` if your tool list has it (it appears only when the organization has agent archive tools turned on); otherwise overwrite the duplicate with a one-line pointer to the surviving page. Archived pages are hidden from every agent at once and are permanently deleted after a retention period unless a person restores them, so merge first and archive second. Say in the log which you did.
 5. **Link.** Add `[[namespace/page-name]]` links and `relatedPages` between pages that mention each other, and repair links to pages that do not exist. If `get_wiki_page` returns no `links` or `backlinks`, the link graph is off for this organization: write the links anyway and say so in the log.
 6. **Retire.** For each contradicted active learning, `create_learning` with `supersedes` when you have the corrected fact, otherwise `retire_learning`; the reason names the trace that contradicts it. Active learnings only.
 7. **Promote upward, keep it lean.** A fact seen repeatedly and confirmed by traces may be worth one short learning; the rest stays in the wiki. If the active learnings still number in the dozens after this pass, say so in the log.
-8. **Log.** Append one short entry to the `memory/dream-log` page (create it if missing) with `mode: "append"`: the date, how many traces were read, what was verified, merged, linked and retired, what stayed unverifiable, and any promoted learnings that look wrong. Keep it to a few lines; the log is for a reader who wants to know what changed.
+8. **Log.** Append one short entry to the `memory/dream-log` page (create it if missing) with `mode: "append"`: a heading with the full ISO time the pass began, how many traces were read, what was verified, merged, linked and retired, what stayed unverifiable, and any promoted learnings that look wrong. Keep it to a few lines; the log is for a reader who wants to know what changed.
 
 ## Cadence and cost
 
@@ -37,4 +37,4 @@ A pass reads every new trace, so run it often enough that each pass is small, an
 
 ## What this pass does not do
 
-It does not hard-delete pages, archive traces, edit promoted learnings, read other people's personal pages, or open the original artifact a trace points to.
+It does not archive traces, edit promoted learnings, read other people's personal pages, or open the original artifact a trace points to.
