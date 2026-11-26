@@ -74,11 +74,31 @@ No commit or push is needed. Call the `process_event` MCP tool directly: read ea
 brainbox sync <dir> [--namespace <ns>] [--transform <name>] [--dry-run] [--force] [--analysis-depth ...] [--json]
 ```
 
-Use this instead of re-running `brainbox ingest` on a folder that keeps changing. Sync keeps the folder in step with the Brain by a stable `sourceKey` per file: new and edited docs are ingested, unchanged ones are skipped. Run `--dry-run` first on a new folder to see what it would do. The namespace defaults to the folder name, and one sync root owns a namespace.
+Use this instead of re-running `brainbox ingest` on a folder that keeps changing. Sync keeps the folder in step with the Brain by a stable `sourceKey` per file: new and edited docs are ingested, unchanged ones are skipped. Run `--dry-run` first on a new folder to see what it would do. The namespace defaults to the folder name.
 
-**When the files need rewriting first** (strip internal sections, add frontmatter, flatten includes), write a small committed script at `.brainbox/transforms/<name>.mjs` (or `.ts`, as plain typed JS with no enums) and pass `--transform <name>`. Run `brainbox sync --help` for the script contract. Editing the script re-syncs the docs it touched.
+### Roots and ownership
+
+A sync root owns its namespace and everything under it (unless `--flat`). The server keeps no owner record: the client lists pages by namespace prefix and matches them to files by `sourceKey`. So use one root per namespace subtree:
+
+- **Never re-run a parent root after splitting it into per-child roots.** The parent still claims every child's pages, finds no matching files under its own folder, and reports every sibling as `pendingDeletes`.
+- **Pages that sit directly in a parent namespace need their own `--flat` root**, or nothing will ever update them: no child root owns them.
+- **For big sets, prefer one root per folder.** Runs are smaller, a failure stays inside one run, and a rerun resumes because docs that already landed are skipped server-side.
+
+### What sync picks up
+
+Sync reads `md`, `markdown`, `txt`, `html`, `htm`, `pdf` and `docx`. Dot-directories and `node_modules` are skipped, so never write generated output under `.brainbox/`. Anything else (JSON, CSV, exports) has to be converted to markdown **before** you sync; `--transform` only rewrites files sync already picks up, it does not add new ones.
+
+### Frontmatter and links
+
+Only string-valued frontmatter keys become page metadata; arrays and objects stay in the body. Links become the wiki graph: write `[[root/relative/path]]` (the namespace plus the file name, no extension) or a relative markdown link like `[text](x.md)`. A `sourceKey` is an identity, not a link target, so it does not resolve in links.
+
+**When the files need rewriting first** (strip internal sections, add frontmatter, flatten includes), write a small committed script at `.brainbox/transforms/<name>.mjs` (or `.ts`, as plain typed JS with no enums) and pass `--transform <name>`. Run `brainbox sync --help` for the script contract. Editing the script changes every doc's version hash, so the next sync re-sends everything once: settle the script on a `--dry-run` before the real run.
 
 A frontmatter `sourceKey:` keeps a renamed file's identity, so the rename does not look like a delete plus a new doc. Use `--force` only for a doc that looks stuck after a failed ingest.
+
+### Check the result against the index
+
+On projects with more than 1000 docs, the sync summary's added and deleted counts can be wrong until ctx-layer-clients#119 lands. Duplicates are still prevented server-side, so a rerun is safe; verify the outcome with `get_index` rather than trusting the counts.
 
 ### Deletes
 
