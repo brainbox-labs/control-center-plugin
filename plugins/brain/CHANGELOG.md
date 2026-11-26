@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6
+
+`brain-ingest` Sync section gains the lessons from a large real sync (about 5.4k pages): one root per namespace subtree and why a parent root must not be re-run after splitting (siblings show up as `pendingDeletes`), `--flat` roots for pages directly in a parent namespace, per-folder roots for big sets, the supported file types and skipped directories (convert anything else to markdown before sync), that editing a transform re-sends every doc once, frontmatter and link rules, and a caveat to verify counts with `get_index` on projects over 1000 docs.
+
 ## 0.2.5
 
 `brain-ingest` teaches `brainbox sync <dir>`: keeping a docs folder (a repo's `kb/` or `docs/`) in step with the Brain by stable `sourceKey`, optional committed client-side transforms, `--dry-run` first, and deletes that are never archived without the user's explicit yes (`pendingDeletes`, then `brainbox prune`). `brain-recall` notes synced docs live under a wiki namespace; `brain-setup` points `kb/` and `docs/` folders at sync. Needs `@brainbox-labs/cli` 0.17.0 or later for `brainbox prune`, which requires Node 24.
