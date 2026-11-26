@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+Two skills for agent memory, after Anthropic's "Components of agent memory": `brain-memory` (what to remember and where: traces as the transcript, learnings, one wiki page per subject, personal pages; read `get_index` first; keep the injected layer small) and `brain-dream` (a scheduled pass that verifies learnings and wiki claims against traces, merges duplicates, adds links, retires contradicted learnings, archives duplicate pages when `archive_wiki_page` is available, and logs each run). Backlinks, the `get_index` wiki section and `archive_wiki_page` depend on org settings; the skills degrade without them.
+
 ## 0.2.6
 
 `brain-ingest` Sync section gains the lessons from a large real sync (about 5.4k pages): one root per namespace subtree and why a parent root must not be re-run after splitting (siblings show up as `pendingDeletes`), `--flat` roots for pages directly in a parent namespace, per-folder roots for big sets, the supported file types and skipped directories (convert anything else to markdown before sync), that editing a transform re-sends every doc once, frontmatter and link rules, and a caveat to verify counts with `get_index` on projects over 1000 docs.
